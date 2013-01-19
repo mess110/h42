@@ -1,0 +1,10 @@
+{
+  "name": "h42",
+  "main": "app.js",
+  "dependencies": {
+    "socket.io": "*",
+    "express": "*",
+    "jade": "*"
+  },
+  "version": "0.0.1"
+}
