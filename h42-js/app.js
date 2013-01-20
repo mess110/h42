@@ -5,7 +5,9 @@ var express = require('express')
   , firmata = require('firmata')
   , config = require('./config');
 
-var board = new firmata.Board(config.h42.port, function() {});
+if (config.h42.enabled) {
+  var board = new firmata.Board(config.h42.port, function() {});
+}
 
 function digitalHigh(pin) {
   board.digitalWrite(pin, board.HIGH);
@@ -13,6 +15,19 @@ function digitalHigh(pin) {
 
 function digitalLow(pin) {
   board.digitalWrite(pin, board.LOW);
+}
+
+function handleEngine(upPin, downPin, val) {
+  if (val >= 50) {
+    board.digitalWrite(upPin, 0);
+    board.digitalWrite(downPin, val);
+  } else if (val < -50) {
+    board.digitalWrite(upPin, val);
+    board.digitalWrite(DownPin, 0);
+  } else {
+    board.digitalWrite(upPin, 0);
+    board.digitalWrite(downPin, 0);
+  }
 }
 
 app.configure(function() {
@@ -30,29 +45,13 @@ app.get('/ping', function(req, res) {
 
 io.sockets.on('connection', function (socket) {
   socket.on('slide', function (data) {
-    if (data['id'] === 'leftEngine') {
-      val = data['value'];
-      if (val >= 50) {
-        board.digitalWrite(9, 0);
-        board.digitalWrite(6, data['value']);
-      } else if (val < -50) {
-        board.digitalWrite(9, data['value']);
-        board.digitalWrite(6, 0);
-      } else {
-        board.digitalWrite(9, 0);
-        board.digitalWrite(6, 0);
-      }
-    } else if (data['id'] === 'rightEngine') {
-      val = data['value'];
-      if (val >= 50) {
-        board.digitalWrite(3, 0);
-        board.digitalWrite(5, data['value']);
-      } else if (val < -50) {
-        board.digitalWrite(3, data['value']);
-        board.digitalWrite(5, 0);
-      } else {
-        board.digitalWrite(3, 0);
-        board.digitalWrite(5, 0);
+    console.log(data);
+    if (config.h42.enabled) {
+      console.log('sending to h42');
+      if (data['id'] === 'leftEngine') {
+        handleEngine(9, 6, data['value']);
+      } else if (data['id'] === 'rightEngine') {
+        handleEngine(3, 5, data['value']);
       }
     }
   });

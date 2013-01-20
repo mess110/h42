@@ -5,6 +5,7 @@ config.server = {
 }
 
 config.h42 = {
+  enabled: true,
   port: '/dev/ttyACM0'
 }
 
