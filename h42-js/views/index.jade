@@ -1,9 +1,14 @@
-link(rel='stylesheet', href='public/style.css')
+doctype 5
+html(lang='en')
+  head
+    title h42
+    link(rel='stylesheet', href='public/style.css')
 
-input#leftEngine(type='range', min='0', max='255', value='0')
-input#rightEngine(type='range', min='0', max='255', value='0')
-input#bothEngines(type='range', min='0', max='255', value='0')
-
-script(src='/socket.io/socket.io.js')
-script(src='/public/jquery.min.js')
-script(src='/public/h42.js')
+  body
+    input#leftEngine(type='range', min='0', max='255', value='0')
+    input#rightEngine(type='range', min='0', max='255', value='0')
+    input#bothEngines(type='range', min='0', max='255', value='0')
+    
+    script(src='/socket.io/socket.io.js')
+    script(src='/public/jquery.min.js')
+    script(src='/public/h42.js')
