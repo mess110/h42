@@ -2,33 +2,10 @@ var express = require('express')
   , app = express()
   , server = require('http').createServer(app)
   , io = require('socket.io').listen(server)
-  , firmata = require('firmata')
-  , config = require('./config');
+  , config = require('./config')
+  , h42 = require('./h42');
 
-if (config.h42.enabled) {
-  var board = new firmata.Board(config.h42.port, function() {});
-}
-
-function digitalHigh(pin) {
-  board.digitalWrite(pin, board.HIGH);
-}
-
-function digitalLow(pin) {
-  board.digitalWrite(pin, board.LOW);
-}
-
-function handleEngine(upPin, downPin, val) {
-  if (val >= 50) {
-    board.digitalWrite(upPin, 0);
-    board.digitalWrite(downPin, val);
-  } else if (val < -50) {
-    board.digitalWrite(upPin, val);
-    board.digitalWrite(DownPin, 0);
-  } else {
-    board.digitalWrite(upPin, 0);
-    board.digitalWrite(downPin, 0);
-  }
-}
+h42.init();
 
 app.configure(function() {
   app.use('/public', express.static(__dirname + '/public'));
@@ -45,14 +22,12 @@ app.get('/ping', function(req, res) {
 
 io.sockets.on('connection', function (socket) {
   socket.on('slide', function (data) {
-    console.log(data);
-    if (config.h42.enabled) {
-      console.log('sending to h42');
-      if (data['id'] === 'leftEngine') {
-        handleEngine(9, 6, data['value']);
-      } else if (data['id'] === 'rightEngine') {
-        handleEngine(3, 5, data['value']);
-      }
+    if (data['id'] === 'leftEngine') {
+      h42.engine(9, 6, data['value']);
+      h42.digital(13, 1);
+    } else if (data['id'] === 'rightEngine') {
+      h42.engine(3, 5, data['value']);
+      h42.digital(13, 0);
     }
   });
 });
