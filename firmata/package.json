@@ -1,0 +1,8 @@
+{
+  "name": "h42-firmata",
+  "main": "app.js",
+  "dependencies": {
+    "firmata": "0.2.3"
+  },
+  "version": "0.0.1"
+}
