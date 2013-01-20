@@ -5,8 +5,9 @@ config.server = {
 }
 
 config.h42 = {
-  enabled: true,
-  port: '/dev/ttyACM0'
+  // port: '/dev/ttyACM0',
+  port: '/dev/ttyUSB0',
+  enabled: true
 }
 
 module.exports = config

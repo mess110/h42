@@ -1,6 +1,7 @@
 var express = require('express')
   , app = express()
   , server = require('http').createServer(app)
+  , realtime = require('./realtime')
   , io = require('socket.io').listen(server)
   , config = require('./config')
   , h42 = require('./h42');
@@ -20,16 +21,6 @@ app.get('/ping', function(req, res) {
   res.end('pong');
 });
 
-io.sockets.on('connection', function (socket) {
-  socket.on('slide', function (data) {
-    if (data['id'] === 'leftEngine') {
-      h42.engine(9, 6, data['value']);
-      h42.digital(13, 1);
-    } else if (data['id'] === 'rightEngine') {
-      h42.engine(3, 5, data['value']);
-      h42.digital(13, 0);
-    }
-  });
-});
+realtime.init(io, h42);
 
 server.listen(config.server.port);
