@@ -4,7 +4,8 @@
   "dependencies": {
     "socket.io": "*",
     "express": "*",
-    "jade": "*"
+    "jade": "*",
+    "firmata": "*"
   },
   "version": "0.0.1"
 }
