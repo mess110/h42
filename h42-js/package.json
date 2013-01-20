@@ -5,7 +5,8 @@
     "socket.io": "*",
     "express": "*",
     "jade": "*",
-    "firmata": "*"
+    "firmata": "*",
+    "supervisor": "*"
   },
   "version": "0.0.1"
 }

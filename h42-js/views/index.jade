@@ -5,9 +5,9 @@ html(lang='en')
     link(rel='stylesheet', href='public/style.css')
 
   body
-    input#leftEngine(type='range', min='0', max='255', value='0')
-    input#rightEngine(type='range', min='0', max='255', value='0')
-    input#bothEngines(type='range', min='0', max='255', value='0')
+    input#leftEngine(type='range', min='-255', max='255', step='5', value='0')
+    input#rightEngine(type='range', min='-255', max='255', step='5', value='0')
+    input#bothEngines(type='range', min='-255', max='255', step='5', value='0')
     
     script(src='/socket.io/socket.io.js')
     script(src='/public/jquery.min.js')
