@@ -13,8 +13,8 @@ psk="WPA-PASSWORD"
 
 sudo nano /etc/network/interfaces
 
-# Used by ifup(8) and ifdown(8). See the interfaces(5) manpage or
-# /usr/share/doc/ifupdown/examples for more information.
+Used by ifup(8) and ifdown(8). See the interfaces(5) manpage or
+/usr/share/doc/ifupdown/examples for more information.
 
 auto lo
 
